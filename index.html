@@ -184,14 +184,15 @@
   </footer>
 
   <script>
-    window.addEventListener('load', function() {
-      const preloader = document.getElementById('preloader');
-      if(preloader) {
-        preloader.style.opacity = '0';
-        preloader.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => preloader.remove(), 600);
-      }
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.style.opacity = '0';
+    preloader.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => preloader.remove(), 600);
+  }
+});
+
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
