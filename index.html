@@ -8,6 +8,8 @@
 
   <!-- Google Fonts: Cormorant Garamond + Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- FontAwesome per icone -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTU5qmq6xXYgNq6JU5gEaS7jqYx1jqVi5c5rEhEtK3dE5XIxQKwbP95G7z6z27JjD2K+/4sYiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     /* Colore di sfondo panna/beige e testi scuri */
@@ -19,6 +21,29 @@
       padding: 0;
     }
 
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f5f0e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #preloader div {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #b77b5b;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* Titoli principali */
     h1, h2, h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -27,6 +52,11 @@
     header {
       padding: 60px 16px;
       text-align: center;
+      position: sticky;
+      top: 0;
+      background: #f5f0e6;
+      z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     h1 {
@@ -49,15 +79,25 @@
     .container {
       max-width: 720px;
       margin: 0 auto;
-      padding: 60px 24px; /* spaziatura uniforme tra le sezioni */
+      padding: 60px 24px;
     }
 
     .section {
       border-top: 1px solid #eee;
-      padding: 60px 0; /* spaziatura uniforme */
+      padding: 60px 0;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      position: relative;
+    }
+
+    .section::before {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: #b77b5b;
+      margin: 0 auto 24px;
     }
 
     .section.visible {
@@ -104,6 +144,10 @@
   </style>
 </head>
 <body>
+
+  <!-- Preloader -->
+  <div id="preloader"><div></div></div>
+
   <header>
     <div class="container">
       <div style="text-transform:uppercase;color:#999;letter-spacing:2px">Matrimonio</div>
@@ -115,21 +159,21 @@
 
   <main class="container">
     <section class="section" id="cerimonia">
-      <h3>Cerimonia</h3>
+      <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
       <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Cerimonia">
       <div class="place">Basilica della Passione</div>
       <div class="muted">11:00 AM<br>Via Vincenzo Bellini, 2, 20122 Milano (MI)</div>
     </section>
 
     <section class="section" id="ricevimento">
-      <h3>Ricevimento</h3>
+      <h3><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#b77b5b;"></i>Ricevimento</h3>
       <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Ricevimento">
       <div class="place">Agriturismo Cascina Rosio</div>
       <div class="muted">20080 Albairate (MI)</div>
     </section>
 
     <section class="section" id="regalo">
-      <h3>Regalo di nozze</h3>
+      <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
       <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Regalo di nozze">
       <p class="muted">Il dono più bello sarà condividere con voi questo giorno speciale. Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa. Grazie di cuore!</p>
 
@@ -147,11 +191,21 @@
   </main>
 
   <footer>
-    <div class="container">Matrimonio Giuditta &amp; Giacomo</div>
+    <div class="container">Sito creato con Google Sites — &copy; Giuditta &amp; Giacomo</div>
   </footer>
 
   <script>
-    // Smooth scroll per link interni
+    // Preloader fade out
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      if(preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => preloader.remove(), 600);
+      }
+    });
+
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -159,12 +213,14 @@
       });
     });
 
-    // Fade-in sezione al scroll
+    // Fade-in sections on scroll with delay
     window.addEventListener('scroll', () => {
-      document.querySelectorAll('.section').forEach(section => {
+      document.querySelectorAll('.section').forEach((section, i) => {
         const top = section.getBoundingClientRect().top;
         const screen = window.innerHeight / 1.2;
-        if(top < screen) { section.classList.add('visible'); }
+        if(top < screen) {
+          setTimeout(() => section.classList.add('visible'), i * 150);
+        }
       });
     });
   </script>
