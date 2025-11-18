@@ -9,7 +9,7 @@
   <!-- Google Fonts: Cormorant Garamond + Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- FontAwesome per icone -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTU5qmq6xXYgNq6JU5gEaS7jqYx1jqVi5c5rEhEtK3dE5XIxQKwbP95G7z6z27JjD2K+/4sYiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     body {
@@ -43,9 +43,7 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    h1, h2, h3 {
-      font-family: 'Cormorant Garamond', serif;
-    }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
 
     header {
       padding: 60px 16px;
@@ -99,7 +97,6 @@
 
     footer { font-size: 12px; color: #888; text-align: center; padding: 24px; }
 
-    /* Stile RSVP form */
     .rsvp-form { background: #f9f9f9; padding: 24px; border-radius: 8px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .rsvp-form label { display: block; margin-top: 12px; font-weight: 600; }
     .rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 10px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
@@ -135,7 +132,6 @@
       <div class="muted">20080 Albairate (MI)</div>
     </section>
 
-    <!-- Nuova sezione RSVP -->
     <section class="section" id="rsvp">
       <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza (RSVP)</h3>
       <div class="rsvp-form">
@@ -180,20 +176,21 @@
   </main>
 
   <footer>
-    <div class="container">Matrimonio Giuditta &amp; Giacomo</div>
+    <div class="container">Sito creato con Google Sites — &copy; Giuditta &amp; Giacomo</div>
   </footer>
 
   <script>
+    // Preloader sicuro
     document.addEventListener('DOMContentLoaded', () => {
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.style.opacity = '0';
-    preloader.style.transition = 'opacity 0.5s ease';
-    setTimeout(() => preloader.remove(), 600);
-  }
-});
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => preloader.remove(), 600);
+      }
+    });
 
-
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -201,4 +198,16 @@
       });
     });
 
-    window.addEventListe
+    // Fade-in sections on scroll con delay
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.section').forEach((section, i) => {
+        const top = section.getBoundingClientRect().top;
+        const screen = window.innerHeight / 1.2;
+        if(top < screen) {
+          setTimeout(() => section.classList.add('visible'), i * 150);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
