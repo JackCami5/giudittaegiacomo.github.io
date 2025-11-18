@@ -101,42 +101,6 @@
       text-align: center;
       padding: 24px;
     }
-
-    /* Pulsanti eleganti */
-    .button {
-      display: inline-block;
-      padding: 12px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .button-primary {
-      background-color: #b77b5b;
-      color: #fff;
-      border: none;
-    }
-
-    .button-primary:hover {
-      background-color: #a36b4f;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-    }
-
-    .button-secondary {
-      background-color: transparent;
-      border: 2px solid #b77b5b;
-      color: #b77b5b;
-    }
-
-    .button-secondary:hover {
-      background-color: #b77b5b;
-      color: #fff;
-      transform: translateY(-2px);
-    }
   </style>
 </head>
 <body>
@@ -146,10 +110,6 @@
       <h1>Giuditta & Giacomo</h1>
       <h2>Sabato 16 Maggio — Ci sposiamo</h2>
       <p class="muted">Di seguito alcune informazioni utili sul nostro matrimonio.</p>
-      <div style="margin-top:20px;">
-        <a href="#rsvp" class="button button-primary">Conferma la tua presenza</a>
-        <a href="#galleria" class="button button-secondary">Guarda la galleria</a>
-      </div>
     </div>
   </header>
 
@@ -191,7 +151,7 @@
   </footer>
 
   <script>
-    // Smooth scroll per menu e pulsanti
+    // Smooth scroll per link interni
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
