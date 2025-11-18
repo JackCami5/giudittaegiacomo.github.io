@@ -9,10 +9,9 @@
   <!-- Google Fonts: Cormorant Garamond + Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- FontAwesome per icone -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTU5qmq6xXYgNq6JU5gEaS7jqYx1jqVi5c5rEhEtK3dE5XIxQKwbP95G7z6z27JjD2K+/4sYiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* Colore di sfondo panna/beige e testi scuri */
     body {
       background-color: #f5f0e6;
       color: #111;
@@ -44,39 +43,15 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Titoli principali */
-    h1, h2, h3 {
-      font-family: 'Cormorant Garamond', serif;
-    }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
 
-    header {
-      padding: 60px 16px;
-      text-align: center;
-      background: #f5f0e6;
-    }
+    header { padding: 60px 16px; text-align: center; background: #f5f0e6; }
 
-    h1 {
-      font-size: 48px;
-      margin: 0;
-    }
+    h1 { font-size: 48px; margin: 0; }
+    @media (min-width: 640px) { h1 { font-size: 64px; } }
+    h2 { font-size: 18px; color: #555; margin-top: 8px; }
 
-    @media (min-width: 640px) {
-      h1 {
-        font-size: 64px;
-      }
-    }
-
-    h2 {
-      font-size: 18px;
-      color: #555;
-      margin-top: 8px;
-    }
-
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 60px 24px;
-    }
+    .container { max-width: 720px; margin: 0 auto; padding: 60px 24px; }
 
     .section {
       border-top: 1px solid #eee;
@@ -96,10 +71,7 @@
       margin: 0 auto 24px;
     }
 
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .section.visible { opacity: 1; transform: translateY(0); }
 
     .section img {
       max-width: 100%;
@@ -109,39 +81,24 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .section img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
+    .section img:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 
-    .place {
-      font-weight: 600;
-      margin-top: 8px;
-    }
+    .place { font-weight: 600; margin-top: 8px; }
+    .muted { color: #666; }
 
-    .muted {
-      color: #666;
-    }
+    .iban-box { background: #f9f9f9; border: 1px solid #eee; padding: 12px; border-radius: 6px; margin-top: 8px; }
 
-    .iban-box {
-      background: #f9f9f9;
-      border: 1px solid #eee;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 8px;
-    }
+    footer { font-size: 12px; color: #888; text-align: center; padding: 24px; }
 
-    footer {
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-      padding: 24px;
-    }
+    .rsvp-form { background: #f9f9f9; padding: 24px; border-radius: 8px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .rsvp-form label { display: block; margin-top: 12px; font-weight: 600; }
+    .rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 10px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
+    .rsvp-form button { margin-top: 16px; padding: 12px 24px; background-color: #b77b5b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .rsvp-form button:hover { background-color: #a36b4f; }
   </style>
 </head>
 <body>
 
-  <!-- Preloader -->
   <div id="preloader"><div></div></div>
 
   <header>
@@ -168,6 +125,32 @@
       <div class="muted">20080 Albairate (MI)</div>
     </section>
 
+    <!-- Sezione RSVP aggiunta -->
+    <section class="section" id="rsvp">
+      <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza (RSVP)</h3>
+      <div class="rsvp-form">
+        <form action="#" method="post">
+          <label for="nome">Nome e Cognome</label>
+          <input type="text" id="nome" name="nome" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="partecipazione">Parteciperai?</label>
+          <select id="partecipazione" name="partecipazione" required>
+            <option value="">Seleziona...</option>
+            <option value="si">Sì, sarò presente</option>
+            <option value="no">No, non potrò partecipare</option>
+          </select>
+
+          <label for="messaggio">Messaggio / Note</label>
+          <textarea id="messaggio" name="messaggio" rows="4"></textarea>
+
+          <button type="submit">Invia RSVP</button>
+        </form>
+      </div>
+    </section>
+
     <section class="section" id="regalo">
       <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
       <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Regalo di nozze">
@@ -191,8 +174,8 @@
   </footer>
 
   <script>
-    // Preloader fade out
-    window.addEventListener('load', function() {
+    // Preloader sicuro
+    document.addEventListener('DOMContentLoaded', () => {
       const preloader = document.getElementById('preloader');
       if(preloader) {
         preloader.style.opacity = '0';
@@ -203,13 +186,13 @@
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function(e) {
         e.preventDefault();
         document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    // Fade-in sections on scroll with delay
+    // Fade-in sections on scroll
     window.addEventListener('scroll', () => {
       document.querySelectorAll('.section').forEach((section, i) => {
         const top = section.getBoundingClientRect().top;
