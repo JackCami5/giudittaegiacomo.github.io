@@ -1,35 +1,244 @@
-<script>
-  // Preloader sicuro
-  document.addEventListener('DOMContentLoaded', () => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      preloader.style.opacity = '0';
-      preloader.style.transition = 'opacity 0.5s ease';
-      setTimeout(() => preloader.remove(), 600);
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Giuditta & Giacomo — Matrimonio</title>
+  <meta name="description" content="Sito del matrimonio - informazioni pratiche" />
+
+  <!-- Google Fonts: Cormorant Garamond + Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- FontAwesome per icone -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    body {
+      background-color: #f5f0e6;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
     }
-  });
 
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      document
-        .querySelector(this.getAttribute('href'))
-        .scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f5f0e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #preloader div {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #b77b5b;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-  // Fade-in sections on scroll + premium fade
-  window.addEventListener('scroll', () => {
-    document.querySelectorAll('.section').forEach((section, i) => {
-      const top = section.getBoundingClientRect().top;
-      const screen = window.innerHeight / 1.15;
-      if (top < screen) {
-        setTimeout(() => section.classList.add('visible'), i * 150);
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; /* più grande */
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #8f5e46;
+    }
+
+    header { padding: 60px 16px; text-align: center; background: #f5f0e6; }
+
+    h1 { font-size: 48px; margin: 0; }
+    @media (min-width: 640px) { h1 { font-size: 64px; } }
+    h2 { font-size: 18px; color: #555; margin-top: 8px; }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 60px 24px; }
+
+    .section {
+      border-top: 1px solid #eee;
+      padding: 60px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      position: relative;
+    }
+
+    .section::before {
+      content: "";
+      display: block;
+      width: 80px; /* più decorativo */
+      height: 3px;
+      background: linear-gradient(to right, #c69c7b, #8f5e46);
+      margin: 0 auto 28px;
+      border-radius: 2px;
+    }
+
+    .section.visible { opacity: 1; transform: translateY(0); }
+
+    .section img {
+      max-width: 85%; /* ridotte */
+      display: block;
+      margin: 0 auto 24px auto; /* evita sovrapposizioni */
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section img:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+    .place { font-weight: 600; margin-top: 8px; }
+    .muted { color: #666; }
+
+    .iban-box { background: #f9f9f9; border: 1px solid #eee; padding: 12px; border-radius: 6px; margin-top: 8px; }
+
+    footer { font-size: 12px; color: #888; text-align: center; padding: 24px; }
+
+    .rsvp-form { background: #f9f9f9; padding: 24px; border-radius: 8px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .rsvp-form label { display: block; margin-top: 12px; font-weight: 600; }
+    .rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 10px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
+    .rsvp-form button { margin-top: 16px; padding: 12px 24px; background-color: #b77b5b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .rsvp-form button:hover { background-color: #a36b4f; }
+    /* Parallax effect */
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      min-height: 320px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      margin-bottom: 32px;
+    }
+
+    /* Smooth premium fade */
+    .fade-premium {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .fade-premium.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader"><div></div></div>
+
+  <header>
+    <div class="container">
+      <div style="text-transform:uppercase;color:#999;letter-spacing:2px">Matrimonio</div>
+      <h1>Giuditta & Giacomo</h1>
+      <h2>Sabato 16 Maggio — Ci sposiamo</h2>
+      <p class="muted">Di seguito alcune informazioni utili sul nostro matrimonio.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" id="cerimonia">
+      <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop');"></div>
+      <div class="place">Basilica della Passione</div>
+      <div class="muted">11:00 AM<br>Via Vincenzo Bellini, 2, 20122 Milano (MI)</div>
+    </section>
+
+    <section class="section" id="ricevimento">
+      <h3><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#b77b5b;"></i>Ricevimento</h3>
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1200&auto=format&fit=crop');"></div>
+      <div class="place">Agriturismo Cascina Rosio</div>
+      <div class="muted">20080 Albairate (MI)</div>
+    </section>
+
+    <!-- Sezione RSVP aggiunta -->
+    <section class="section" id="rsvp">
+      <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza (RSVP)</h3>
+      <div class="rsvp-form">
+        <form action="#" method="post">
+          <label for="nome">Nome e Cognome</label>
+          <input type="text" id="nome" name="nome" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="partecipazione">Parteciperai?</label>
+          <select id="partecipazione" name="partecipazione" required>
+            <option value="">Seleziona...</option>
+            <option value="si">Sì, sarò presente</option>
+            <option value="no">No, non potrò partecipare</option>
+          </select>
+
+          <label for="messaggio">Messaggio / Note</label>
+          <textarea id="messaggio" name="messaggio" rows="4"></textarea>
+
+          <button type="submit">Invia RSVP</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="regalo">
+      <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop');"></div>
+      <p class="muted">Il dono più bello sarà condividere con voi questo giorno speciale. Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa. Grazie di cuore!</p>
+
+      <div class="iban-box">
+        <div><strong>IBAN:</strong></div>
+        <div class="muted">IT00 X000 0000 0000 0000 0000 000</div>
+        <div style="margin-top:8px"><strong>Banca:</strong></div>
+        <div class="muted">Nome Banca</div>
+        <div style="margin-top:8px"><strong>Intestatario:</strong></div>
+        <div class="muted">Nome Cognome</div>
+        <div style="margin-top:8px"><strong>Causale:</strong></div>
+        <div class="muted">Nome Cognome - Viaggio Nozze</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Matrimonio Giuditta &amp; Giacomo</div>
+  </footer>
+
+  <script>
+    // Preloader sicuro
+    document.addEventListener('DOMContentLoaded', () => {
+      const preloader = document.getElementById('preloader');
+      if(preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => preloader.remove(), 600);
       }
     });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Fade-in sections on scroll + premium fade
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.section').forEach((section, i) => {
+        const top = section.getBoundingClientRect().top;
+        const screen = window.innerHeight / 1.15;
+        if(top < screen) {
+          setTimeout(() => section.classList.add('visible'), i * 150);
+        }
+      });
 
     document.querySelectorAll('.fade-premium').forEach((el) => {
       const top = el.getBoundingClientRect().top;
       const screen = window.innerHeight * 0.9;
-      if (top < screen) el.c
+      if (top < screen) el.classList.add('visible');
+    });
+  });
+</script>
+</body>
+</html>
