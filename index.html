@@ -43,7 +43,14 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; /* più grande */
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #8f5e46;
+    }
 
     header { padding: 60px 16px; text-align: center; background: #f5f0e6; }
 
@@ -65,19 +72,22 @@
     .section::before {
       content: "";
       display: block;
-      width: 60px;
-      height: 2px;
-      background: #b77b5b;
-      margin: 0 auto 24px;
+      width: 80px; /* più decorativo */
+      height: 3px;
+      background: linear-gradient(to right, #c69c7b, #8f5e46);
+      margin: 0 auto 28px;
+      border-radius: 2px;
     }
 
     .section.visible { opacity: 1; transform: translateY(0); }
 
     .section img {
-      max-width: 100%;
+      max-width: 85%; /* ridotte */
+      display: block;
+      margin: 0 auto 24px auto; /* evita sovrapposizioni */
       height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
