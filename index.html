@@ -184,7 +184,7 @@
 
     <section class="section" id="regalo">
       <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
-      <div class="parallax fade-premium" style="background-image:u
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop');"></div>
       <p class="muted">Il dono più bello sarà condividere con voi questo giorno speciale. Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa. Grazie di cuore!</p>
 
       <div class="iban-box">
@@ -223,13 +223,22 @@
       });
     });
 
-    // Fade-in sections on scroll
+    // Fade-in sections on scroll + premium fade
     window.addEventListener('scroll', () => {
       document.querySelectorAll('.section').forEach((section, i) => {
         const top = section.getBoundingClientRect().top;
-        const screen = window.innerHeight / 1.2;
+        const screen = window.innerHeight / 1.15;
         if(top < screen) {
           setTimeout(() => section.classList.add('visible'), i * 150);
+        }
+      });
+
+      document.querySelectorAll('.fade-premium').forEach((el) => {
+        const top = el.getBoundingClientRect().top;
+        const screen = window.innerHeight * 0.9;
+        if(top < screen) el.classList.add('visible');
+      });
+    });
         }
       });
     });
