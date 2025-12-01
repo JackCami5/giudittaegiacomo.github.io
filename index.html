@@ -105,6 +105,27 @@
     .rsvp-form input, .rsvp-form select, .rsvp-form textarea { width: 100%; padding: 10px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
     .rsvp-form button { margin-top: 16px; padding: 12px 24px; background-color: #b77b5b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
     .rsvp-form button:hover { background-color: #a36b4f; }
+    /* Parallax effect */
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      min-height: 320px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      margin-bottom: 32px;
+    }
+
+    /* Smooth premium fade */
+    .fade-premium {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .fade-premium.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -123,14 +144,14 @@
   <main class="container">
     <section class="section" id="cerimonia">
       <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
-      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Cerimonia">
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop');"></div>
       <div class="place">Basilica della Passione</div>
       <div class="muted">11:00 AM<br>Via Vincenzo Bellini, 2, 20122 Milano (MI)</div>
     </section>
 
     <section class="section" id="ricevimento">
       <h3><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#b77b5b;"></i>Ricevimento</h3>
-      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Ricevimento">
+      <div class="parallax fade-premium" style="background-image:url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1200&auto=format&fit=crop');"></div>
       <div class="place">Agriturismo Cascina Rosio</div>
       <div class="muted">20080 Albairate (MI)</div>
     </section>
@@ -163,7 +184,7 @@
 
     <section class="section" id="regalo">
       <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
-      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop&crop=faces" alt="Regalo di nozze">
+      <div class="parallax fade-premium" style="background-image:u
       <p class="muted">Il dono più bello sarà condividere con voi questo giorno speciale. Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa. Grazie di cuore!</p>
 
       <div class="iban-box">
