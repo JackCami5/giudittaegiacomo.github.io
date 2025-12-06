@@ -8,6 +8,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -44,47 +45,53 @@
       font-family: "Cormorant Garamond", serif;
       letter-spacing: 1px;
       text-align: center;
-      margin-bottom: 26px;
       color: #8f5e46;
     }
-    h1 { font-size: 64px; margin-bottom: 12px; }
-    h2 { font-size: 20px; color: #555; margin-top: -10px; }
-    h3 { font-size: 32px; }
+    h1 { font-size: 64px; margin: 0; }
+    h2 { font-size: 20px; color: #555; margin-top: 8px; }
+    h3 { font-size: 32px; margin-bottom: 26px; }
 
     header { padding: 60px 16px; text-align: center; }
 
     .container { max-width: 760px; margin: auto; padding: 60px 24px; }
 
+    /* Sezioni + effetto fade premium */
     .section {
       padding: 60px 0;
       border-top: 1px solid #eee;
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(40px);
+      transition: opacity 1.4s ease, transform 1.4s ease;
+      position: relative;
     }
     .section.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .section::before {
-      content: "";
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(to right, #c69c7b, #8f5e46);
-      border-radius: 2px;
+
+    /* Divisore ornamentale */
+    .section::after {
+      content: "❧";
       display: block;
-      margin: 0 auto 28px auto;
+      text-align: center;
+      font-size: 28px;
+      color: #c7a577;
+      margin-top: 48px;
+      opacity: 0.55;
     }
 
-    /* PARALLAX IMAGE CARDS */
+    /* Immagini parallax con cornice dorata */
     .parallax {
       min-height: 360px;
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+
+      border: 2px solid rgba(199, 165, 119, 0.55);
       border-radius: 12px;
+
       margin-bottom: 24px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
     }
 
     .place { font-weight: 600; margin-top: 8px; text-align: center; }
@@ -98,11 +105,7 @@
       padding: 24px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
-    .rsvp-form label {
-      font-weight: 600;
-      display: block;
-      margin-top: 12px;
-    }
+    .rsvp-form label { font-weight: 600; display: block; margin-top: 12px; }
     .rsvp-form input,
     .rsvp-form textarea,
     .rsvp-form select {
@@ -121,6 +124,37 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
+    }
+
+    /* SUPER-PREMIUM IBAN BOX */
+    .iban-premium {
+      max-width: 540px;
+      margin: 40px auto;
+      padding: 32px 34px;
+      background: linear-gradient(to bottom right, rgba(255,255,255,0.62), rgba(255,255,255,0.82));
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      border: 1px solid rgba(199,165,119,0.35);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.8;
+      position: relative;
+    }
+    .iban-premium::before {
+      content: "";
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #c7a577, transparent);
+      display: block;
+      margin: 0 auto 22px auto;
+      border-radius: 2px;
+    }
+    .iban-title {
+      font-weight: 600;
+      color: #8f5e46;
+      font-size: 20px;
+      margin-bottom: 18px;
     }
 
     footer {
@@ -195,43 +229,27 @@
     <!-- REGALO -->
     <section class="section" id="regalo">
       <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
-    
+
       <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/viaggio.jpg');"></div>
-    
+
       <p class="muted" style="margin-bottom:32px; text-align:center; font-size:16px; line-height:1.6;">
         Il dono più bello sarà condividere con voi questo giorno speciale.<br>
         Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa.<br>
         <strong style="color:#8f5e46;">Grazie di cuore!</strong>
       </p>
-    
-      <div 
-        class="iban-box" 
-        style="
-          max-width:520px;
-          margin:auto;
-          text-align:center;
-          padding:24px 28px;
-          border:1px solid rgba(183,123,91,0.35);
-          border-radius:12px;
-          background:rgba(255,255,255,0.75);
-          backdrop-filter:blur(4px);
-          box-shadow:0 4px 16px rgba(0,0,0,0.06);
-          font-size:16px;
-          line-height:1.7;
-        "
-      >
-        <div style="font-weight:600; color:#8f5e46; margin-bottom:12px; font-size:18px;">
+
+      <div class="iban-premium">
+        <div class="iban-title">
           <i class="fas fa-heart" style="color:#b77b5b; margin-right:6px;"></i>
-          Dettagli per chi lo desidera
+          Dettagli per chi desidera farci un pensiero
         </div>
-    
+
         <div><strong>IBAN:</strong> IT00 X000 0000 0000 0000 0000 000</div>
         <div><strong>Banca:</strong> Nome banca</div>
         <div><strong>Intestatario:</strong> Nome Cognome</div>
         <div><strong>Causale:</strong> Nome Cognome – Viaggio di nozze</div>
       </div>
     </section>
-
 
   </main>
 
