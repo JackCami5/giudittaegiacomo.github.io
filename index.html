@@ -164,6 +164,41 @@
       padding: 24px;
       margin-top: 40px;
     }
+
+    /* --- MIGLIORAMENTI PER SMARTPHONE (Responsive Design) --- */
+    @media (max-width: 768px) {
+        
+        /* 1. CORREZIONE PARALLAX SU MOBILE */
+        .parallax {
+            /* Sostituisce 'fixed' con 'scroll' solo su schermi piccoli */
+            background-attachment: scroll; 
+            /* Aumenta l'altezza minima se necessario, dato che il fixed è sparito */
+            min-height: 280px; 
+        }
+
+        /* 2. RIDIMENSIONAMENTO TITOLI */
+        /* Rende il titolo principale più compatto su smartphone */
+        h1 {
+            font-size: 48px;
+        }
+
+        /* 3. SPAZIATURA GENERALE */
+        /* Rende l'header meno ingombrante */
+        header {
+            padding: 40px 16px;
+        }
+
+        /* Rende le sezioni più compatte */
+        .container {
+            padding: 40px 16px; 
+        }
+
+        /* Rimuovi l'ombra del box IBAN (opzionale, per alleggerire) */
+        .iban-premium {
+            box-shadow: none;
+            backdrop-filter: none;
+        }
+    }
   </style>
 </head>
 
