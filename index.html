@@ -204,28 +204,52 @@
 
     <!-- RSVP -->
     <section class="section" id="rsvp">
-      <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza (RSVP)</h3>
+      <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza</h3>
 
       <div class="rsvp-form">
-        <form>
+        <form name="submit-to-google-sheet" action="https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec">
+          
           <label>Nome e Cognome</label>
-          <input type="text" required>
+          <input type="text" name="Nome" required placeholder="Es. Mario Rossi">
 
           <label>Parteciperai?</label>
-          <select required>
+          <select name="Partecipazione" required>
             <option value="">Seleziona...</option>
-            <option value="si">Sì</option>
-            <option value="no">No</option>
+            <option value="Sì, ci sarò">Sì, ci sarò</option>
+            <option value="No, purtroppo non posso">No, purtroppo non posso</option>
           </select>
 
-          <label>Messaggio / Note</label>
-          <textarea rows="4"></textarea>
+          <label>Hai restrizioni alimentari?</label>
+          <select name="Intolleranze" id="food-select" required>
+            <option value="No">No</option>
+            <option value="Sì">Sì</option>
+          </select>
 
-          <button type="submit">Invia RSVP</button>
+          <div id="food-details" style="display:none;">
+            <label style="color:#b77b5b;">Specifica intolleranze/allergie:</label>
+            <input type="text" name="Dettaglio Intolleranze" placeholder="Es. Celiaco, Vegetariano...">
+          </div>
+
+          <label>Sarai accompagnato da bambini?</label>
+          <select name="Bambini" id="kids-select" required>
+            <option value="No">No</option>
+            <option value="Sì">Sì</option>
+          </select>
+
+          <div id="kids-details" style="display:none;">
+            <label style="color:#b77b5b;">Indica età e numero:</label>
+            <input type="text" name="Dettaglio Bambini" placeholder="Es. 1 bambino di 3 anni">
+          </div>
+
+          <label>Note e Commenti</label>
+          <textarea name="Note" rows="4" placeholder="Scrivi qui un messaggio per gli sposi..."></textarea>
+
+          <button type="submit" id="btn-submit">Invia RSVP</button>
+          <p id="msg-success" style="display:none; color:green; text-align:center; margin-top:10px; font-weight:bold;">Grazie! La tua risposta è stata registrata.</p>
+          <p id="msg-error" style="display:none; color:red; text-align:center; margin-top:10px;">Errore nell'invio. Riprova.</p>
         </form>
       </div>
     </section>
-
     <!-- REGALO -->
     <section class="section" id="regalo">
       <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
@@ -270,6 +294,65 @@
         const top = s.getBoundingClientRect().top;
         if (top < window.innerHeight * 0.85) s.classList.add("visible");
       });
+    });
+
+    /* LOGICA RSVP */
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec'; // <--- INCOLLA DI NUOVO L'URL QUI
+    const form = document.forms['submit-to-google-sheet'];
+    const btn = document.getElementById('btn-submit');
+    const msgSuccess = document.getElementById('msg-success');
+    const msgError = document.getElementById('msg-error');
+
+    // Gestione campi condizionali (Intolleranze)
+    const foodSelect = document.getElementById('food-select');
+    const foodDetails = document.getElementById('food-details');
+    foodSelect.addEventListener('change', function() {
+      if(this.value === 'Sì') {
+        foodDetails.style.display = 'block';
+        foodDetails.querySelector('input').setAttribute('required', 'true');
+      } else {
+        foodDetails.style.display = 'none';
+        foodDetails.querySelector('input').removeAttribute('required');
+        foodDetails.querySelector('input').value = '';
+      }
+    });
+
+    // Gestione campi condizionali (Bambini)
+    const kidsSelect = document.getElementById('kids-select');
+    const kidsDetails = document.getElementById('kids-details');
+    kidsSelect.addEventListener('change', function() {
+      if(this.value === 'Sì') {
+        kidsDetails.style.display = 'block';
+        kidsDetails.querySelector('input').setAttribute('required', 'true');
+      } else {
+        kidsDetails.style.display = 'none';
+        kidsDetails.querySelector('input').removeAttribute('required');
+        kidsDetails.querySelector('input').value = '';
+      }
+    });
+
+    // Invio Form
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.innerHTML = "Invio in corso...";
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          msgSuccess.style.display = "block";
+          msgError.style.display = "none";
+          btn.innerHTML = "Inviato!";
+          form.reset();
+          // Nascondi i campi extra dopo il reset
+          foodDetails.style.display = 'none';
+          kidsDetails.style.display = 'none';
+        })
+        .catch(error => {
+          msgError.style.display = "block";
+          btn.disabled = false;
+          btn.innerHTML = "Invia RSVP";
+          console.error('Error!', error.message);
+        });
     });
   </script>
 
