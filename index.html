@@ -178,18 +178,25 @@
 
     /*LINK DI GOOGLE MAPS*/
 
-      .minimal-link {
-        color: #b77b5b; /* Colore oro/marrone del sito */
-        text-decoration: none;
-        font-size: 0.9em;
-        font-style: italic;
-        border-bottom: 1px dotted #b77b5b; /* Sottile linea tratteggiata */
-        transition: opacity 0.3s;
-      }
-      
-      .minimal-link:hover {
-        opacity: 0.7;
-      }
+    /* Nuovo stile per rendere l'indirizzo cliccabile e centrato */
+    .address-link {
+      text-decoration: none !important; /* Toglie la sottolineatura */
+      display: block;                /* Fondamentale per la centratura */
+      width: 100%;                   /* Occupa tutto lo spazio per essere centrato */
+      color: inherit;                /* Mantiene i colori originali del testo */
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .address-link:hover {
+      opacity: 0.7; /* Effetto visivo quando ci passi sopra */
+    }
+
+    /* Assicura che i testi dentro il link rimangano centrati */
+    .address-link .place, 
+    .address-link .muted {
+      text-align: center;
+    }
 
     /* --- MIGLIORAMENTI PER SMARTPHONE (Responsive Design) --- */
     @media (max-width: 768px) {
@@ -290,7 +297,7 @@
       <div class="place">Basilica della Passione</div>
       <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano</div>
       
-      <a href="https://www.google.com/maps/search/?api=1&query=Basilica+di+Santa+Maria+della+Passione+Milano" target="_blank" class="minimal-link">
+      <a href="https://www.google.com/maps/search/?api=1&query=Basilica+di+Santa+Maria+della+Passione+Milano" target="_blank" class="address-link">
        (Apri Mappa)
       </a>
     </section>
@@ -304,7 +311,7 @@
       <div class="place">Agriturismo Cascina Rosio</div>
       <div class="muted">Albairate (MI)</div>
 
-      <a href="https://www.google.com/maps/place/Agriturismo+Cascina+Rosio/@45.4201982,8.9633715,17z/data=!3m1!5s0x4786ef3f38f20a67:0xd92f1b1225777f3d!4m10!1m2!2m1!1sAgriturismo+Cascina+Rosio+Albairate%22+target%3D%22_blank%22+class%3D%22maps-link%22!3m6!1s0x4786ef62176aa907:0x68ceb25d2a208973!8m2!3d45.4201982!4d8.9655602!15sCkZBZ3JpdHVyaXNtbyBDYXNjaW5hIFJvc2lvIEFsYmFpcmF0ZSIgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSJtYXBzLWxpbmsiWkMiQWFncml0dXJpc21vIGNhc2NpbmEgcm9zaW8gYWxiYWlyYXRlIHRhcmdldCBfYmxhbmsgY2xhc3MgbWFwcyBsaW5rkgEIZmFybXN0YXmaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnRGTUZSdVFsRlJNRGxRVFZoc1NFNTZhM2hrVlRGVlpVWnNlbEZyUlJBQuABAPoBBAgAEBQ!16s%2Fg%2F1tfq_99n?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="minimal-link">
+      <a href="https://www.google.com/maps/place/Agriturismo+Cascina+Rosio/@45.4201982,8.9633715,17z/data=!3m1!5s0x4786ef3f38f20a67:0xd92f1b1225777f3d!4m10!1m2!2m1!1sAgriturismo+Cascina+Rosio+Albairate%22+target%3D%22_blank%22+class%3D%22maps-link%22!3m6!1s0x4786ef62176aa907:0x68ceb25d2a208973!8m2!3d45.4201982!4d8.9655602!15sCkZBZ3JpdHVyaXNtbyBDYXNjaW5hIFJvc2lvIEFsYmFpcmF0ZSIgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSJtYXBzLWxpbmsiWkMiQWFncml0dXJpc21vIGNhc2NpbmEgcm9zaW8gYWxiYWlyYXRlIHRhcmdldCBfYmxhbmsgY2xhc3MgbWFwcyBsaW5rkgEIZmFybXN0YXmaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnRGTUZSdVFsRlJNRGxRVFZoc1NFNTZhM2hrVlRGVlpVWnNlbEZyUlJBQuABAPoBBAgAEBQ!16s%2Fg%2F1tfq_99n?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="address-link">
         (Apri Mappa)
       </a>
     </section>
