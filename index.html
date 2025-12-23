@@ -176,6 +176,33 @@
       margin-top: 40px;
     }
 
+    /*LINK DI GOOGLE MAPS*/
+
+    .maps-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #8f5e46; 
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid #c7a577; /* Un sottile bordo color oro/marrone */
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .maps-link:hover {
+      background-color: #8f5e46;
+      color: white;
+      border-color: #8f5e46;
+    }
+
+    .maps-link i {
+      margin-right: 6px;
+    }
+
     /* --- MIGLIORAMENTI PER SMARTPHONE (Responsive Design) --- */
     @media (max-width: 768px) {
         
@@ -274,6 +301,10 @@
 
       <div class="place">Basilica della Passione</div>
       <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano</div>
+      
+      <a href="https://maps.app.goo.gl/3N29U9u3J7B3tEyx7" target="_blank" class="maps-link">
+        <i class="fas fa-map-marker-alt"></i> Apri su Google Maps
+      </a>
     </section>
 
     <!-- RICEVIMENTO -->
@@ -284,6 +315,10 @@
 
       <div class="place">Agriturismo Cascina Rosio</div>
       <div class="muted">Albairate (MI)</div>
+
+      <a href="https://maps.app.goo.gl/zD38YfD1eC27P6Pz8" target="_blank" class="maps-link">
+        <i class="fas fa-map-marker-alt"></i> Apri su Google Maps
+      </a>
     </section>
 
     <!-- RSVP -->
