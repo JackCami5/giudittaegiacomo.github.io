@@ -1,477 +1,411 @@
-<!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Giuditta & Giacomo — Matrimonio</title>
-  <meta name="description" content="Sito del matrimonio - informazioni pratiche" />
+<!-- SOSTITUISCI la sezione RSVP nel tuo HTML con questo codice -->
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<!-- RSVP -->
+<section class="section" id="rsvp">
+  <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza</h3>
 
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <div class="rsvp-form">
+    <form name="submit-to-google-sheet" action="https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec">
+      
+      <label>Nome e Cognome</label>
+      <input type="text" name="Nome" required placeholder="Es. Mario Rossi" class="form-input">
 
-  <style>
-    body {
-      background-color: #f5f0e6;
-      color: #111;
-      font-family: "Inter", sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+      <label>Parteciperai?</label>
+      <select name="Partecipazione" required class="form-input">
+        <option value="">Seleziona...</option>
+        <option value="Sì, ci sarò">Sì, ci sarò</option>
+        <option value="No, purtroppo non posso">No, purtroppo non posso</option>
+      </select>
 
-    /* PRELOADER */
-    #preloader {
-      position: fixed;
-      inset: 0;
-      background: #f5f0e6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    #preloader div {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #b77b5b;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+      <label>Hai restrizioni alimentari?</label>
+      <select name="Intolleranze" id="food-select" required class="form-input">
+        <option value="No">No</option>
+        <option value="Sì">Sì</option>
+      </select>
 
-    h1, h2, h3 {
-      font-family: "Cormorant Garamond", serif;
-      letter-spacing: 1px;
-      text-align: center;
-      color: #8f5e46;
-    }
-    h1 { font-size: 64px; margin: 0;}
-    h2 { font-size: 20px; color: #555; margin-top: 8px; }
-    h3 { font-size: 32px; margin-bottom: 26px; }
+      <div id="food-details" style="display:none;">
+        <label style="color:#b77b5b;">Specifica intolleranze/allergie:</label>
+        <input type="text" name="Dettaglio Intolleranze" placeholder="Es. Celiaco, Vegetariano..." class="form-input">
+      </div>
 
-    header { padding: 60px 16px; text-align: center; }
+      <label>Sarai accompagnato da bambini?</label>
+      <select name="Bambini" id="kids-select" required class="form-input">
+        <option value="No">No</option>
+        <option value="Sì">Sì</option>
+      </select>
 
-    .container { max-width: 760px; margin: auto; padding: 60px 24px; }
+      <div id="kids-details" style="display:none;">
+        <label style="color:#b77b5b;">Indica età e numero:</label>
+        <input type="text" name="Dettaglio Bambini" placeholder="Es. 1 bambino di 3 anni" class="form-input">
+      </div>
 
-    .subtitle {
-      font-family: "Cormorant Garamond", serif; /* Stesso font dei titoli */
-      text-transform: uppercase;
-      letter-spacing: 3px; /* Aumentiamo leggermente lo spazio */
-      font-weight: 700; /* Lo rendiamo grassetto */
-      color: #8f5e46; /* Stesso colore dei titoli principali */
-      font-size: 20px; /* Lo ingrandiamo (era circa 12px) */
-      margin-bottom: 5px; /* Spazio sotto */
-    }
+      <label>Note e Commenti</label>
+      <textarea name="Note" rows="4" placeholder="Scrivi qui un messaggio per gli sposi..." class="form-input"></textarea>
 
-    /* Sezioni + effetto fade premium */
-    .section {
-      padding: 20px 0;
-      border-top: 1px solid #eee;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1.4s ease, transform 1.4s ease;
-      position: relative;
-    }
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      <button type="submit" id="btn-submit">
+        <span id="btn-text">Invia RSVP</span>
+        <span id="btn-loader" style="display:none;">
+          <i class="fas fa-spinner fa-spin"></i> Invio...
+        </span>
+      </button>
+    </form>
 
-    /* Divisore ornamentale */
-    .section::after {
-      content: "❧";
-      display: block;
-      text-align: center;
-      font-size: 28px;
-      color: #c7a577;
-      margin-top: 48px;
-      opacity: 0.55;
-    }
-
-    /* Immagini parallax con cornice dorata */
-    .parallax {
-      min-height: 450px;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-
-      border: 2px solid rgba(199, 165, 119, 0.55);
-      border-radius: 12px;
-
-      margin-bottom: 24px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
-    }
-
-    .place { font-weight: 600; margin-top: 8px; text-align: center; }
-    .muted { color: #666; text-align: center; }
-
-    /* RSVP FORM */
-    .rsvp-form {
-      background: #ffffffd9;
-      backdrop-filter: blur(3px);
-      border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    }
-    .rsvp-form label { font-weight: 600; display: block; margin-top: 12px; }
-    .rsvp-form input,
-    .rsvp-form textarea,
-    .rsvp-form select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #bbb;
-      border-radius: 6px;
-      margin-top: 4px;
-    }
-    .rsvp-form button {
-      margin-top: 18px;
-      padding: 12px 24px;
-      background: #b77b5b;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* SUPER-PREMIUM IBAN BOX */
-    .iban-premium {
-      max-width: 540px;
-      margin: 40px auto;
-      padding: 32px 34px;
-      padding-top: 0 !important;
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.62), rgba(255,255,255,0.82));
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      border: 1px solid rgba(199,165,119,0.35);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-      text-align: center;
-      font-size: 17px;
-      line-height: 1.8;
-      position: relative;
-    }
-    .iban-premium::before {
-      content: "";
-      width: 60%;
-      height: 2px;
-      background: linear-gradient(to right, transparent, #c7a577, transparent);
-      display: block;
-      margin: 0 auto 22px auto;
-      border-radius: 2px;
-    }
-    .iban-title {
-      font-weight: 600;
-      color: #8f5e46;
-      font-size: 20px;
-      margin-bottom: 18px;
-    }
-
-    footer {
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-      padding: 24px;
-      margin-top: 40px;
-    }
-
-    /*LINK DI GOOGLE MAPS*/
-
-    .elegant-link-container {
-      text-align: center; /* Centra tutto il contenuto */
-      margin-top: 15px;
-    }
-    
-    .elegant-link {
-      display: inline-block;
-      color: #b77b5b; /* Il tuo colore oro/marrone */
-      text-decoration: none;
-      font-family: "Inter", sans-serif;
-      font-size: 12px;
-      text-transform: uppercase; /* Tutto maiuscolo */
-      letter-spacing: 2px;      /* Spaziatura tra le lettere elegante */
-      border-bottom: 1px solid rgba(183, 123, 91, 0.4); /* Sottile linea sotto */
-      padding-bottom: 3px;
-      transition: all 0.3s ease;
-    }
-    
-    .elegant-link:hover {
-      border-bottom: 1px solid rgba(183, 123, 91, 1);
-      opacity: 0.7;
-    }
-
-    /* --- MIGLIORAMENTI PER SMARTPHONE (Responsive Design) --- */
-    @media (max-width: 768px) {
-        
-        /* 1. CORREZIONE PARALLAX SU MOBILE */
-        .parallax {
-            /* Sostituisce 'fixed' con 'scroll' solo su schermi piccoli */
-            background-attachment: scroll; 
-            /* Aumenta l'altezza minima se necessario, dato che il fixed è sparito */
-            min-height: 280px; 
-        }
-
-        /* 2. RIDIMENSIONAMENTO TITOLI */
-        /* Rende il titolo principale più compatto su smartphone */
-        h1 {
-            font-size: 48px;
-        }
-
-        /* 3. SPAZIATURA GENERALE */
-        /* Rende l'header meno ingombrante */
-        header {
-            padding: 40px 16px;
-        }
-
-        /* Rende le sezioni più compatte */
-        .container {
-            padding: 40px 16px; 
-        }
-
-        /* Rimuovi l'ombra del box IBAN (opzionale, per alleggerire) */
-        .iban-premium {
-            box-shadow: none;
-            backdrop-filter: none;
-        }
-    }
-    /* NUOVO: Menu di Navigazione Principale */
-    .main-nav {
-      margin-top: 30px;
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px 20px;
-    }
-    .main-nav a {
-      color: #8f5e46;
-      text-decoration: none;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 14px;
-      padding: 5px 10px;
-      border-bottom: 2px solid transparent;
-      transition: border-bottom 0.3s ease;
-    }
-    .main-nav a:hover {
-      border-bottom: 2px solid #b77b5b;
-    }
-    /* Regole CSS per la compatibilità mobile (@media) */
-    @media (max-width: 768px) {
-        /* ... le tue regole media query ... */
-    }
-    
-    /* Rimosso spazio*/
-#cerimonia {
-      padding-top: 0 !important;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- PRELOADER -->
-  <div id="preloader"><div></div></div>
-
-  <header>
-    <div class="container">
-      <div class="subtitle">Matrimonio</div>
-      <h1>Giuditta & Giacomo</h1>
-      <h2>Sabato 16 Maggio — Ci sposiamo</h2>
-      <p class="muted">Di seguito alcune informazioni utili sul nostro matrimonio.</p>
-      <nav class="main-nav">
-        <a href="#cerimonia">Cerimonia</a>
-        <a href="#ricevimento">Ricevimento</a>
-        <a href="#rsvp">RSVP</a>
-        <a href="#regalo">Regalo</a>
-      </nav>
-      <div style="width: 100%; border-bottom: 1px dashed #c7a577; opacity: 0.3; margin-bottom: 30px;"></div>
+    <!-- Messaggio di successo migliorato -->
+    <div id="msg-success" style="display:none;">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h4>Grazie mille!</h4>
+      <p>La tua risposta è stata registrata con successo.</p>
     </div>
-  </header>
 
-  <main class="container">
-
-    <!-- CERIMONIA -->
-    <section class="section" id="cerimonia">
-          <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
-    
-          <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/cerimonia.jpg');"></div>
-    
-            <div class="place">Basilica della Passione</div>
-            <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano </div>
-            <div class="elegant-link-container">
-    <a href="https://maps.app.goo.gl/2BmLjvFb8hAZGH9z7" target="_blank" class="elegant-link">
-      Apri Mappa
-    </a>
-        </section>
-
-    <!-- RICEVIMENTO -->
-<section class="section" id="ricevimento">
-      <h3><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#b77b5b;"></i>Ricevimento</h3>
-
-      <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/ricevimento.jpg');"></div>
-
-        <div class="place">Agriturismo Cascina Rosio</div>
-        <div class="muted">Albairate (MI) </div>
-
-        <div class="elegant-link-container">
-    <a href="https://maps.app.goo.gl/FhgmqpWtJcTNpKEdA" target="_blank" class="elegant-link">
-      Apri Mappa
-      </a>
-    </section>
-
-    <!-- RSVP -->
-    <section class="section" id="rsvp">
-      <h3><i class="fas fa-envelope" style="margin-right:8px;color:#b77b5b;"></i>Conferma la tua presenza</h3>
-
-      <div class="rsvp-form">
-        <form name="submit-to-google-sheet" action="https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec">
-          
-          <label>Nome e Cognome</label>
-          <input type="text" name="Nome" required placeholder="Es. Mario Rossi">
-
-          <label>Parteciperai?</label>
-          <select name="Partecipazione" required>
-            <option value="">Seleziona...</option>
-            <option value="Sì, ci sarò">Sì, ci sarò</option>
-            <option value="No, purtroppo non posso">No, purtroppo non posso</option>
-          </select>
-
-          <label>Hai restrizioni alimentari?</label>
-          <select name="Intolleranze" id="food-select" required>
-            <option value="No">No</option>
-            <option value="Sì">Sì</option>
-          </select>
-
-          <div id="food-details" style="display:none;">
-            <label style="color:#b77b5b;">Specifica intolleranze/allergie:</label>
-            <input type="text" name="Dettaglio Intolleranze" placeholder="Es. Celiaco, Vegetariano...">
-          </div>
-
-          <label>Sarai accompagnato da bambini?</label>
-          <select name="Bambini" id="kids-select" required>
-            <option value="No">No</option>
-            <option value="Sì">Sì</option>
-          </select>
-
-          <div id="kids-details" style="display:none;">
-            <label style="color:#b77b5b;">Indica età e numero:</label>
-            <input type="text" name="Dettaglio Bambini" placeholder="Es. 1 bambino di 3 anni">
-          </div>
-
-          <label>Note e Commenti</label>
-          <textarea name="Note" rows="4" placeholder="Scrivi qui un messaggio per gli sposi..."></textarea>
-
-          <button type="submit" id="btn-submit">Invia RSVP</button>
-          <p id="msg-success" style="display:none; color:green; text-align:center; margin-top:10px; font-weight:bold;">Grazie! La tua risposta è stata registrata.</p>
-          <p id="msg-error" style="display:none; color:red; text-align:center; margin-top:10px;">Errore nell'invio. Riprova.</p>
-        </form>
+    <!-- Messaggio di errore -->
+    <div id="msg-error" style="display:none;">
+      <div class="error-icon">
+        <i class="fas fa-exclamation-circle"></i>
       </div>
-    </section>
-    <!-- REGALO -->
-    <section class="section" id="regalo">
-      <h3><i class="fas fa-gift" style="margin-right:8px;color:#b77b5b;"></i>Regalo di nozze</h3>
+      <p>Si è verificato un errore. Riprova tra qualche istante.</p>
+    </div>
+  </div>
+</section>
 
-      <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/viaggio.jpg');"></div>
+<style>
+/* ========================================
+   STILI FORM RSVP MIGLIORATO - MOBILE FIRST
+   ======================================== */
 
-      <p class="muted" style="margin-bottom:32px; text-align:center; font-size:16px; line-height:1.6;">
-        Il dono più bello sarà condividere con voi questo giorno speciale.<br>
-        Se però desiderate farci un pensiero, ci rendereste felici contribuendo al nostro viaggio di nozze in Africa.<br>
-        <strong style="color:#8f5e46;">Grazie di cuore!</strong>
-      </p>
+/* Form container già presente, manteniamo lo stile esistente */
+.rsvp-form {
+  background: #ffffffd9;
+  backdrop-filter: blur(3px);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  position: relative;
+}
 
-      <div class="iban-premium">
-        <div class="iban-title">
-          Dettagli per chi desidera farci un pensiero
-        </div>
+/* Label più leggibili */
+.rsvp-form label {
+  font-weight: 600;
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 15px;
+}
 
-        <div><strong>IBAN:</strong> IT00 X000 0000 0000 0000 0000 000</div>
-        <div><strong>Banca:</strong> Nome banca</div>
-        <div><strong>Intestatario:</strong> Nome Cognome</div>
-        <div><strong>Causale:</strong> Nome Cognome – Viaggio di nozze</div>
-      </div>
-    </section>
+/* Input, select, textarea migliorati per mobile */
+.form-input {
+  width: 100%;
+  padding: 14px 16px; /* Più spazio per il tocco */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  font-size: 16px; /* Previene lo zoom su iOS */
+  font-family: "Inter", sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  -webkit-appearance: none; /* Rimuove stile nativo iOS */
+  appearance: none;
+}
 
-  </main>
+/* Feedback visivo al focus */
+.form-input:focus {
+  outline: none;
+  border-color: #b77b5b;
+  box-shadow: 0 0 0 3px rgba(183, 123, 91, 0.1);
+  transform: translateY(-1px);
+}
 
-  <footer>
-    Matrimonio Giuditta & Giacomo
-  </footer>
+/* Stato valido (dopo compilazione) */
+.form-input:valid {
+  border-color: #a8d5a3;
+}
 
-  <!-- SCRIPT -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const pre = document.getElementById("preloader");
-      pre.style.opacity = "0";
-      setTimeout(() => pre.remove(), 500);
+/* Placeholder più leggibile */
+.form-input::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+/* Select personalizzato con icona */
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238f5e46' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+/* Textarea più alta */
+textarea.form-input {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Bottone principale - MOLTO PIÙ GRANDE E VISIBILE */
+.rsvp-form button[type="submit"] {
+  width: 100%;
+  margin-top: 24px;
+  padding: 18px 24px; /* Più alto per mobile */
+  background: linear-gradient(135deg, #b77b5b 0%, #8f5e46 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(183, 123, 91, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effetto hover/active per mobile */
+.rsvp-form button[type="submit"]:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(183, 123, 91, 0.4);
+}
+
+.rsvp-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Animazione del bottone durante invio */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.rsvp-form button[type="submit"]:disabled {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Messaggi di successo ed errore - MOLTO PIÙ EVIDENTI */
+#msg-success,
+#msg-error {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Successo */
+#msg-success {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border: 2px solid #81c784;
+}
+
+#msg-success h4 {
+  margin: 12px 0 8px 0;
+  color: #2e7d32;
+  font-size: 22px;
+  font-family: "Cormorant Garamond", serif;
+}
+
+#msg-success p {
+  margin: 0;
+  color: #388e3c;
+  font-size: 15px;
+}
+
+.success-icon {
+  font-size: 48px;
+  color: #4caf50;
+  animation: scaleIn 0.5s ease;
+}
+
+/* Errore */
+#msg-error {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border: 2px solid #ef5350;
+}
+
+#msg-error p {
+  margin: 0;
+  color: #c62828;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.error-icon {
+  font-size: 48px;
+  color: #f44336;
+  margin-bottom: 12px;
+  animation: shake 0.5s ease;
+}
+
+/* Animazioni icone */
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Campi condizionali - Animazione smooth */
+#food-details,
+#kids-details {
+  animation: expandDown 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+/* Touch feedback per iOS/Android */
+.form-input,
+.rsvp-form button {
+  -webkit-tap-highlight-color: rgba(183, 123, 91, 0.2);
+}
+
+/* Miglioramenti ulteriori per schermi molto piccoli */
+@media (max-width: 380px) {
+  .rsvp-form {
+    padding: 20px 16px;
+  }
+  
+  .rsvp-form button[type="submit"] {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+}
+</style>
+
+<script>
+/* ========================================
+   JAVASCRIPT FORM RSVP MIGLIORATO
+   ======================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec';
+  const form = document.forms['submit-to-google-sheet'];
+  const btn = document.getElementById('btn-submit');
+  const btnText = document.getElementById('btn-text');
+  const btnLoader = document.getElementById('btn-loader');
+  const msgSuccess = document.getElementById('msg-success');
+  const msgError = document.getElementById('msg-error');
+
+  // Gestione campi condizionali (Intolleranze)
+  const foodSelect = document.getElementById('food-select');
+  const foodDetails = document.getElementById('food-details');
+  foodSelect.addEventListener('change', function() {
+    if(this.value === 'Sì') {
+      foodDetails.style.display = 'block';
+      foodDetails.querySelector('input').setAttribute('required', 'true');
+    } else {
+      foodDetails.style.display = 'none';
+      foodDetails.querySelector('input').removeAttribute('required');
+      foodDetails.querySelector('input').value = '';
+    }
+  });
+
+  // Gestione campi condizionali (Bambini)
+  const kidsSelect = document.getElementById('kids-select');
+  const kidsDetails = document.getElementById('kids-details');
+  kidsSelect.addEventListener('change', function() {
+    if(this.value === 'Sì') {
+      kidsDetails.style.display = 'block';
+      kidsDetails.querySelector('input').setAttribute('required', 'true');
+    } else {
+      kidsDetails.style.display = 'none';
+      kidsDetails.querySelector('input').removeAttribute('required');
+      kidsDetails.querySelector('input').value = '';
+    }
+  });
+
+  // Feedback visivo durante la compilazione
+  const inputs = form.querySelectorAll('.form-input');
+  inputs.forEach(input => {
+    input.addEventListener('input', function() {
+      // Piccola animazione quando l'utente scrive
+      this.style.transform = 'scale(1.01)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 150);
     });
+  });
 
-    window.addEventListener("scroll", () => {
-      document.querySelectorAll(".section").forEach((s) => {
-        const top = s.getBoundingClientRect().top;
-        if (top < window.innerHeight * 0.85) s.classList.add("visible");
+  // Invio Form con feedback migliorato
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    // Nascondi messaggi precedenti
+    msgSuccess.style.display = "none";
+    msgError.style.display = "none";
+    
+    // Mostra loader
+    btn.disabled = true;
+    btnText.style.display = "none";
+    btnLoader.style.display = "inline";
+
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        // Successo - mostra messaggio
+        msgSuccess.style.display = "block";
+        msgError.style.display = "none";
+        
+        // Nascondi form
+        form.style.display = "none";
+        
+        // Scroll smooth al messaggio di successo
+        msgSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Vibrazione feedback (se supportato)
+        if (navigator.vibrate) {
+          navigator.vibrate(200);
+        }
+      })
+      .catch(error => {
+        // Errore - mostra messaggio
+        msgError.style.display = "block";
+        msgSuccess.style.display = "none";
+        
+        // Ripristina bottone
+        btn.disabled = false;
+        btnText.style.display = "inline";
+        btnLoader.style.display = "none";
+        
+        // Vibrazione errore (se supportato)
+        if (navigator.vibrate) {
+          navigator.vibrate([100, 50, 100]);
+        }
+        
+        console.error('Error!', error.message);
       });
-    });
-
-    /* LOGICA RSVP */
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxRCqPQqLl1gE8aB1q6waGiUOInVUTfFvWIMbqKalSte-DyupvfVGMCA49YzWxYoSvx/exec'; // <--- INCOLLA DI NUOVO L'URL QUI
-    const form = document.forms['submit-to-google-sheet'];
-    const btn = document.getElementById('btn-submit');
-    const msgSuccess = document.getElementById('msg-success');
-    const msgError = document.getElementById('msg-error');
-
-    // Gestione campi condizionali (Intolleranze)
-    const foodSelect = document.getElementById('food-select');
-    const foodDetails = document.getElementById('food-details');
-    foodSelect.addEventListener('change', function() {
-      if(this.value === 'Sì') {
-        foodDetails.style.display = 'block';
-        foodDetails.querySelector('input').setAttribute('required', 'true');
-      } else {
-        foodDetails.style.display = 'none';
-        foodDetails.querySelector('input').removeAttribute('required');
-        foodDetails.querySelector('input').value = '';
-      }
-    });
-
-    // Gestione campi condizionali (Bambini)
-    const kidsSelect = document.getElementById('kids-select');
-    const kidsDetails = document.getElementById('kids-details');
-    kidsSelect.addEventListener('change', function() {
-      if(this.value === 'Sì') {
-        kidsDetails.style.display = 'block';
-        kidsDetails.querySelector('input').setAttribute('required', 'true');
-      } else {
-        kidsDetails.style.display = 'none';
-        kidsDetails.querySelector('input').removeAttribute('required');
-        kidsDetails.querySelector('input').value = '';
-      }
-    });
-
-    // Invio Form
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      btn.disabled = true;
-      btn.innerHTML = "Invio in corso...";
-
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-          msgSuccess.style.display = "block";
-          msgError.style.display = "none";
-          btn.innerHTML = "Inviato!";
-          form.reset();
-          // Nascondi i campi extra dopo il reset
-          foodDetails.style.display = 'none';
-          kidsDetails.style.display = 'none';
-        })
-        .catch(error => {
-          msgError.style.display = "block";
-          btn.disabled = false;
-          btn.innerHTML = "Invia RSVP";
-          console.error('Error!', error.message);
-        });
-    });
-  </script>
-
-</body>
-</html>
+  });
+});
+</script>
