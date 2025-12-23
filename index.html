@@ -178,32 +178,26 @@
 
     /*LINK DI GOOGLE MAPS*/
 
-/* Forza la centratura totale del blocco link */
-    .address-link {
-      text-decoration: none !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important; /* Centra orizzontalmente */
-      justify-content: center !important;
-      width: 100% !important;
-      color: inherit !important;
-      margin-top: 20px !important;
-      cursor: pointer;
+    .elegant-link-container {
+      text-align: center; /* Centra tutto il contenuto */
+      margin-top: 15px;
     }
-
-    /* Rende il nome del posto stilizzato bene anche dentro il link */
-    .address-link .place {
-      margin-bottom: 5px !important;
-      color: #333 !important; /* O il colore che preferisci per il titolo */
+    
+    .elegant-link {
+      display: inline-block;
+      color: #b77b5b; /* Il tuo colore oro/marrone */
+      text-decoration: none;
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      text-transform: uppercase; /* Tutto maiuscolo */
+      letter-spacing: 2px;      /* Spaziatura tra le lettere elegante */
+      border-bottom: 1px solid rgba(183, 123, 91, 0.4); /* Sottile linea sotto */
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
     }
-
-    /* Rende l'indirizzo grigio e centrato */
-    .address-link .muted {
-      color: #666 !important;
-      font-size: 0.9em !important;
-    }
-
-    .address-link:hover {
+    
+    .elegant-link:hover {
+      border-bottom: 1px solid rgba(183, 123, 91, 1);
       opacity: 0.7;
     }
 
@@ -303,10 +297,12 @@
     
           <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/cerimonia.jpg');"></div>
     
-          <a href="https://maps.app.goo.gl/o1Sndr6T4yN12XjS8" target="_blank" class="address-link">
             <div class="place">Basilica della Passione</div>
             <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano <i class="fas fa-external-link-alt" style="font-size: 10px; margin-left: 5px;"></i></div>
-          </a>
+            <div class="elegant-link-container">
+    <a href="https://maps.app.goo.gl/2BmLjvFb8hAZGH9z7" target="_blank" class="elegant-link">
+      Apri Mappa
+    </a>
         </section>
 
     <!-- RICEVIMENTO -->
@@ -315,9 +311,13 @@
 
       <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/ricevimento.jpg');"></div>
 
-      <a href="https://maps.app.goo.gl/9ZpP4vG8pC5xYv7k9" target="_blank" class="address-link">
+      <a href="https://maps.app.goo.gl/FhgmqpWtJcTNpKEdA" target="_blank" class="address-link">
         <div class="place">Agriturismo Cascina Rosio</div>
         <div class="muted">Albairate (MI) <i class="fas fa-external-link-alt" style="font-size: 10px; margin-left: 5px;"></i></div>
+
+        <div class="elegant-link-container">
+    <a href="https://maps.app.goo.gl/FhgmqpWtJcTNpKEdA" target="_blank" class="elegant-link">
+      Apri Mappa
       </a>
     </section>
 
