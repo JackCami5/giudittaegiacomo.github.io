@@ -178,24 +178,33 @@
 
     /*LINK DI GOOGLE MAPS*/
 
-    /* Nuovo stile per rendere l'indirizzo cliccabile e centrato */
+/* Forza la centratura totale del blocco link */
     .address-link {
-      text-decoration: none !important; /* Toglie la sottolineatura */
-      display: block;                /* Fondamentale per la centratura */
-      width: 100%;                   /* Occupa tutto lo spazio per essere centrato */
-      color: inherit;                /* Mantiene i colori originali del testo */
-      transition: opacity 0.3s ease;
+      text-decoration: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important; /* Centra orizzontalmente */
+      justify-content: center !important;
+      width: 100% !important;
+      color: inherit !important;
+      margin-top: 20px !important;
       cursor: pointer;
     }
 
-    .address-link:hover {
-      opacity: 0.7; /* Effetto visivo quando ci passi sopra */
+    /* Rende il nome del posto stilizzato bene anche dentro il link */
+    .address-link .place {
+      margin-bottom: 5px !important;
+      color: #333 !important; /* O il colore che preferisci per il titolo */
     }
 
-    /* Assicura che i testi dentro il link rimangano centrati */
-    .address-link .place, 
+    /* Rende l'indirizzo grigio e centrato */
     .address-link .muted {
-      text-align: center;
+      color: #666 !important;
+      font-size: 0.9em !important;
+    }
+
+    .address-link:hover {
+      opacity: 0.7;
     }
 
     /* --- MIGLIORAMENTI PER SMARTPHONE (Responsive Design) --- */
@@ -290,29 +299,25 @@
 
     <!-- CERIMONIA -->
     <section class="section" id="cerimonia">
-      <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
-
-      <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/cerimonia.jpg');"></div>
-
-      <div class="place">Basilica della Passione</div>
-      <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano</div>
-      
-      <a href="https://www.google.com/maps/search/?api=1&query=Basilica+di+Santa+Maria+della+Passione+Milano" target="_blank" class="address-link">
-       (Apri Mappa)
-      </a>
-    </section>
+          <h3><i class="fas fa-church" style="margin-right:8px;color:#b77b5b;"></i>Cerimonia</h3>
+    
+          <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/cerimonia.jpg');"></div>
+    
+          <a href="https://maps.app.goo.gl/o1Sndr6T4yN12XjS8" target="_blank" class="address-link">
+            <div class="place">Basilica della Passione</div>
+            <div class="muted">11:00 — Via Vincenzo Bellini 2, Milano <i class="fas fa-external-link-alt" style="font-size: 10px; margin-left: 5px;"></i></div>
+          </a>
+        </section>
 
     <!-- RICEVIMENTO -->
-    <section class="section" id="ricevimento">
+<section class="section" id="ricevimento">
       <h3><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#b77b5b;"></i>Ricevimento</h3>
 
       <div class="parallax" style="background-image:url('https://raw.githubusercontent.com/JackCami5/giudittaegiacomo.github.io/main/ricevimento.jpg');"></div>
 
-      <div class="place">Agriturismo Cascina Rosio</div>
-      <div class="muted">Albairate (MI)</div>
-
-      <a href="https://www.google.com/maps/place/Agriturismo+Cascina+Rosio/@45.4201982,8.9633715,17z/data=!3m1!5s0x4786ef3f38f20a67:0xd92f1b1225777f3d!4m10!1m2!2m1!1sAgriturismo+Cascina+Rosio+Albairate%22+target%3D%22_blank%22+class%3D%22maps-link%22!3m6!1s0x4786ef62176aa907:0x68ceb25d2a208973!8m2!3d45.4201982!4d8.9655602!15sCkZBZ3JpdHVyaXNtbyBDYXNjaW5hIFJvc2lvIEFsYmFpcmF0ZSIgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSJtYXBzLWxpbmsiWkMiQWFncml0dXJpc21vIGNhc2NpbmEgcm9zaW8gYWxiYWlyYXRlIHRhcmdldCBfYmxhbmsgY2xhc3MgbWFwcyBsaW5rkgEIZmFybXN0YXmaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnRGTUZSdVFsRlJNRGxRVFZoc1NFNTZhM2hrVlRGVlpVWnNlbEZyUlJBQuABAPoBBAgAEBQ!16s%2Fg%2F1tfq_99n?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="address-link">
-        (Apri Mappa)
+      <a href="https://maps.app.goo.gl/9ZpP4vG8pC5xYv7k9" target="_blank" class="address-link">
+        <div class="place">Agriturismo Cascina Rosio</div>
+        <div class="muted">Albairate (MI) <i class="fas fa-external-link-alt" style="font-size: 10px; margin-left: 5px;"></i></div>
       </a>
     </section>
 
